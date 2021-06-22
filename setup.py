@@ -22,6 +22,7 @@ VERSION = "0.0.0"
 
 # What packages are required for this module to be executed?
 REQUIRED = [
+    "dash==1.20.0",
     "deprecation==2.1.0",
     "frozendict==1.2",
     "packaging==20.9",
