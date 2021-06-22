@@ -33,7 +33,16 @@ REQUIRED = [
     "websocket-client==0.57.0",
     "python-dotenv==0.15.0",
     "pre-commit==2.10.1",
-    "black==20.8b1"
+    "black==20.8b1",
+    "sphinx==3.4.3",
+    "sphinx-rtd-theme==0.5.1",
+    "sphinxcontrib-applehelp==1.0.2",
+    "sphinxcontrib-devhelp==1.0.2",
+    "sphinxcontrib-htmlhelp==1.0.3",
+    "sphinxcontrib-jsmath==1.0.1",
+    "sphinxcontrib-qthelp==1.0.3",
+    "sphinxcontrib-serializinghtml==1.1.4",
+    "sphinxemoji==0.1.8",
     # 'requests', 'maya', 'records',
 ]
 
