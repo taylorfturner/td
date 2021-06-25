@@ -7,9 +7,10 @@ Welcome to td's documentation!
 ==============================
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-
+   introduction.rst
+   installation.rst
+   example.rst
+   package.rst
 
 
 Indices and tables
