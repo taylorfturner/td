@@ -2,7 +2,7 @@ import requests
 from td.authentication import Authenticator
 
 
-class TD:
+class Accounts:
     def __init__(self):
         """
         __init__ [summary]
@@ -14,7 +14,7 @@ class TD:
 
     def get(self, params={"fields": "positions"}):
         """
-        get 
+        get
         
         Get all the account(s) data from the TD Ameritrade API.
 
