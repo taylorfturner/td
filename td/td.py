@@ -3,21 +3,26 @@ from td.authentication import Authenticator
 
 
 class TD:
-
     def __init__(self):
-        """Test TD class init
+        """
+        __init__ [summary]
 
-        :return: [description]
-        :rtype: [type]
+        [extended_summary]
         """
         self.endpoint = "https://api.tdameritrade.com/v1/accounts"
 
 
     def get(self, params={"fields": "positions"}):
         """
+        get 
+        
         Get all the account(s) data from the TD Ameritrade API.
-        """
 
+        :param params: API requests parameters, defaults to {"fields": "positions"}
+        :type params: dict, optional
+        :return: API response data. If successful, dictionary of all account positions.
+        :rtype: json object dictionary
+        """
         auth = Authenticator()
 
         header = {
@@ -37,7 +42,10 @@ class TD:
 
     def put(self):
         """
-        Write to a local store of data for historical position
-        analysis.
+        put
+
+        Write to a local store of data for historical position analysis.
+
+        :raises NotImplementedError: [description]
         """
         raise NotImplementedError
