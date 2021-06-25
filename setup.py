@@ -44,7 +44,7 @@ REQUIRED = [
     "sphinxcontrib-qthelp==1.0.3",
     "sphinxcontrib-serializinghtml==1.1.4",
     "sphinxemoji==0.1.8",
-    # 'requests', 'maya', 'records',
+    "requests",
 ]
 
 # What packages are optional?
