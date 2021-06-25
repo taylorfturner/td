@@ -37,6 +37,7 @@ class TD:
 
     def put(self):
         """
-        append data to a local copy of all prior queries
+        Write to a local store of data for historical position
+        analysis.
         """
-        pass
+        raise NotImplementedError
