@@ -49,3 +49,13 @@ class Accounts:
         :raises NotImplementedError: [description]
         """
         raise NotImplementedError
+
+    def run(self):
+        """
+        Execute both the get and put method sequentially 
+        so that users can have one interaction point to run all
+        necessary methods.
+        """
+        self.get()
+        self.put()
+        return True
