@@ -80,3 +80,14 @@ class Accounts:
         self.get()
         self.put()
         return True
+
+    def _process_positions_dict(self, position_dict):
+
+        instrument = position_dict["instrument"]
+
+        position_dict.pop("instrument", None)
+
+        position_dict["symbol"] = instrument["symbol"]
+        position_dict["asset_type"] = instrument["assetType"]
+
+        
