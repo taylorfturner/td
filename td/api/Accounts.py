@@ -17,28 +17,20 @@ class Accounts:
 
     def get(self, params={"fields": "positions"}):
         """
-        get
+        get [summary]
 
-        Get all the account(s) data from the TD Ameritrade API.
+        [extended_summary]
 
-        :param params: API requests parameters, defaults to {"fields": "positions"}
+        :param params: [description], defaults to {"fields": "positions"}
         :type params: dict, optional
-        :return: API response data. If successful, dictionary of all account positions.
-        :rtype: json object dictionary
+        :return: [description]
+        :rtype: [type]
         """
-        auth = Authenticator()
+        self.auth = Authenticator()
 
         header = {
-            "Authorization": f"Bearer {auth.token.access_token}"
+            "Authorization": f"Bearer {self.auth.token.access_token}"
         }
-        content = requests.get(
-                url = self.endpoint,
-                params = params,
-                headers = header
-            )
-
-        if content.status_code != 200:
-            auth.get_refresh_token()
 
         content = requests.get(
             url = self.endpoint,
@@ -48,29 +40,26 @@ class Accounts:
 
         self.data = content.json()
 
-        return True
+        self.account_meta_df, self.position_df = self.to_dataframe()
+
 
 
     def put(self):
         """
-        put
+        put [summary]
 
-        Write to a local store of data for historical position analysis.
+        [extended_summary]
 
-        :raises NotImplementedError: [description]
+        :param account_df: [description]
+        :type account_df: [type]
+        :param position_df: [description]
+        :type position_df: [type]
         """
-        
         today = date.today()
         current_date_string = today.__str__().replace("-", "_")
 
-
-        write_data = json.dumps(self.data)
-
-        with open(f"data/{current_date_string}.json", "w") as outfile:
-            outfile.write(write_data)
-
-        return True
-
+        self.account_meta_df.to_csv(f"data/{current_date_string}_account_df.csv")
+        self.position_df.to_csv(f"data/{current_date_string}_position_df.csv")
 
     def run(self):
         """
@@ -80,40 +69,39 @@ class Accounts:
         """
         self.get()
         self.put()
-        return True
 
-    def process_data(self):
-        
+
+    def to_dataframe(self):
+        """
+        to_dataframe [summary]
+
+        [extended_summary]
+
+        :return: [description]
+        :rtype: [type]
+        """
         account_meta_df = pd.DataFrame()
         position_df = pd.DataFrame()
         
         for iter_data in self.data:
             iter_data = iter_data["securitiesAccount"]
 
+            positions = iter_data["positions"]
+            iter_data.pop("positions", None)
+
             # account meta data
-            type = iter_data["type"]
-            account_id = iter_data["accountId"]
-            roundTrips = iter_data["roundTrips"]
-            is_day_trader = iter_data["isDayTrader"]
-            is_closing_only_restricted = iter_data["isClosingOnlyRestricted"]
-            initial_balances = iter_data["initialBalances"]
-            current_balances = iter_data["currentBalances"]
-            projected_balance = iter_data["projectedBalances"]
+            account_dict = {}
+            for key in iter_data.keys():
+                account_dict[key] = iter_data[key]
+            account_meta_df = account_meta_df.append(account_dict, ignore_index=True)
 
             # account's position data
-            positions = iter_data["positions"]
             for single_position in positions:
                 instrument = single_position["instrument"]
                 single_position.pop("instrument", None)
-                single_position["symbol"] = instrument["symbol"]
-                single_position["asset_type"] = instrument["assetType"]
-                single_position["account_id"] = account_id
+                for key in instrument.keys():
+                    single_position[key] = instrument[key]
 
-                single_position_list = list(single_position)
+                position_df = position_df.append(single_position, ignore_index=True)
 
-                if len(position_df) < 1:
-                    position_df = position_df.from_dict(single_position, orient='columns')
-                elif len(position_df) >= 1:
-                    position_df = position_df.append(single_position_list)
-
-            return account_meta_df, position_df
+        return account_meta_df, position_df
