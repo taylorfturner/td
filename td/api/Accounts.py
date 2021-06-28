@@ -32,6 +32,7 @@ class Accounts:
             "Authorization": f"Bearer {self.auth.token.access_token}"
         }
 
+        # TODO: handle errors, retry, and token refresh
         content = requests.get(
             url = self.endpoint,
             params = params,
@@ -58,6 +59,7 @@ class Accounts:
         today = date.today()
         current_date_string = today.__str__().replace("-", "_")
 
+        # TODO: move this to MySQL
         self.account_meta_df.to_csv(f"data/{current_date_string}_account_df.csv")
         self.position_df.to_csv(f"data/{current_date_string}_position_df.csv")
 
